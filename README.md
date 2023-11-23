@@ -36,5 +36,5 @@ Make sure you have the following software installed on your machine:
         yarn build
     This will create a build folder with optimized and minified files.
 
-    
+  ![Alt text](image.png)  
 
