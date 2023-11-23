@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { calculateMean, calculateMedian, calculateMode } from "../common/commonFunction";
+import {
+  calculateMean,
+  calculateMedian,
+  calculateMode,
+} from "../common/commonFunction";
 
-const FlavanoidsStatsTable: React.FC = () => {
+// Utility function to calculate Gamma for each point in the dataset
+const calculateGamma = (data: any[]) => {
+  return data.map((item) => ({
+    ...item,
+    Gamma: (item.Ash * item.Hue) / item.Magnesium,
+  }));
+};
+
+// Modified React component to display class-wise mean, median, and mode of "Gamma"
+const GammaStatsTable: React.FC = () => {
   const [wineData, setWineData] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://raw.githubusercontent.com/rushikeshpolawar/analyticsdata/main/flavanoids-stats-app/src/asset/Wine-Data.json');
-        const data = await response.json();
-        setWineData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    // Fetch data from Wine-Data.json
+    fetch(
+      "https://raw.githubusercontent.com/rushikeshpolawar/analyticsdata/main/flavanoids-stats-app/src/asset/Wine-Data.json"
+    )
+      .then((response) => response.json())
+      .then((data) => setWineData(calculateGamma(data)))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   // Extracting unique classes from the dataset
@@ -34,37 +43,37 @@ const FlavanoidsStatsTable: React.FC = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Flavanoids Mean</td>
+            <td>Gamma Mean</td>
             {uniqueClasses.map((classNumber) => (
               <td key={classNumber}>
                 {calculateMean(
                   wineData
                     .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => parseFloat(item.Flavanoids))
+                    .map((item) => item.Gamma)
                 )}
               </td>
             ))}
           </tr>
           <tr>
-            <td>Flavanoids Median</td>
+            <td>Gamma Median</td>
             {uniqueClasses.map((classNumber) => (
               <td key={classNumber}>
                 {calculateMedian(
                   wineData
                     .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => parseFloat(item.Flavanoids))
+                    .map((item) => item.Gamma)
                 )}
               </td>
             ))}
           </tr>
           <tr>
-            <td>Flavanoids Mode</td>
+            <td>Gamma Mode</td>
             {uniqueClasses.map((classNumber) => (
               <td key={classNumber}>
                 {calculateMode(
                   wineData
                     .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => parseFloat(item.Flavanoids))
+                    .map((item) => item.Gamma)
                 ).join(", ")}
               </td>
             ))}
@@ -75,4 +84,4 @@ const FlavanoidsStatsTable: React.FC = () => {
   );
 };
 
-export default FlavanoidsStatsTable;
+export default GammaStatsTable;
