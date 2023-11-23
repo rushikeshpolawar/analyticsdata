@@ -17,6 +17,9 @@ const calculateGamma = (data: any[]) => {
 const GammaStatsTable: React.FC = () => {
   const [wineData, setWineData] = useState<any[]>([]);
 
+  // Extracting unique classes from the dataset
+  const uniqueClasses = [...new Set(wineData.map((item) => item.Alcohol))];
+  
   useEffect(() => {
     // Fetch data from Wine-Data.json
     fetch(
@@ -27,59 +30,58 @@ const GammaStatsTable: React.FC = () => {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Extracting unique classes from the dataset
-  const uniqueClasses = [...new Set(wineData.map((item) => item.Alcohol))];
-
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Measure</th>
-            {uniqueClasses.map((classNumber) => (
-              <th key={classNumber}>Class {classNumber}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Gamma Mean</td>
-            {uniqueClasses.map((classNumber) => (
-              <td key={classNumber}>
-                {calculateMean(
-                  wineData
-                    .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => item.Gamma)
-                )}
-              </td>
-            ))}
-          </tr>
-          <tr>
-            <td>Gamma Median</td>
-            {uniqueClasses.map((classNumber) => (
-              <td key={classNumber}>
-                {calculateMedian(
-                  wineData
-                    .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => item.Gamma)
-                )}
-              </td>
-            ))}
-          </tr>
-          <tr>
-            <td>Gamma Mode</td>
-            {uniqueClasses.map((classNumber) => (
-              <td key={classNumber}>
-                {calculateMode(
-                  wineData
-                    .filter((item) => item.Alcohol === classNumber)
-                    .map((item) => item.Gamma)
-                ).join(", ")}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <div className="wine-stats-container">
+        <table className="wine-table">
+          <thead>
+            <tr>
+              <th>Measure</th>
+              {uniqueClasses.map((classNumber) => (
+                <th key={classNumber}>Class {classNumber}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gamma Mean</td>
+              {uniqueClasses.map((classNumber) => (
+                <td key={classNumber}>
+                  {calculateMean(
+                    wineData
+                      .filter((item) => item.Alcohol === classNumber)
+                      .map((item) => item.Gamma)
+                  )}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td>Gamma Median</td>
+              {uniqueClasses.map((classNumber) => (
+                <td key={classNumber}>
+                  {calculateMedian(
+                    wineData
+                      .filter((item) => item.Alcohol === classNumber)
+                      .map((item) => item.Gamma)
+                  )}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td>Gamma Mode</td>
+              {uniqueClasses.map((classNumber) => (
+                <td key={classNumber}>
+                  {calculateMode(
+                    wineData
+                      .filter((item) => item.Alcohol === classNumber)
+                      .map((item) => item.Gamma)
+                  ).join(", ")}
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
