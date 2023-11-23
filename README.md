@@ -32,12 +32,14 @@ Make sure you have the following software installed on your machine:
     To run the React application, use the following command:
      ```bash
         yarn start
+        
     This will start the development server, and you can view the app in your browser at http://localhost:3000.
 
 5. Building the App
     To build the production-ready version of the app, use : 
     ```bash
         yarn build
+
     This will create a build folder with optimized and minified files.
 
 Attached Screenshot
