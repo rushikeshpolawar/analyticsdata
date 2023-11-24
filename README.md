@@ -41,5 +41,5 @@ Make sure you have the following software installed on your machine:
         yarn build
 
 Attached Screenshot
-  ![Flavanoids, Gamma Table screen shot](image.png)  
+  ![Flavanoids, Gamma Table screen shot](image-1.png) 
 
