@@ -11,7 +11,7 @@ const FlavanoidsStatsTable: React.FC = () => {
 
   // Extracting unique classes from the dataset
   const uniqueClasses = [...new Set(wineData.map((item) => item.Alcohol))];
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,7 +73,7 @@ const FlavanoidsStatsTable: React.FC = () => {
                     wineData
                       .filter((item) => item.Alcohol === classNumber)
                       .map((item) => parseFloat(item.Flavanoids))
-                  ).join(", ")}
+                  )}
                 </td>
               ))}
             </tr>

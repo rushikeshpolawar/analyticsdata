@@ -75,7 +75,7 @@ const GammaStatsTable: React.FC = () => {
                     wineData
                       .filter((item) => item.Alcohol === classNumber)
                       .map((item) => item.Gamma)
-                  ).join(", ")}
+                  )}
                 </td>
               ))}
             </tr>
